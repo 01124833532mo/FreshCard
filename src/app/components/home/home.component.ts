@@ -44,21 +44,21 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this._ProductService.getProducts().subscribe({
-      next: (response) => {
+      next: (response: any) => {
         console.log('products', response.data);
         this.products = response.data;
       },
     });
 
     this._ProductService.getCategories().subscribe({
-      next: (response) => {
+      next: (response: any) => {
         console.log('Categories', response);
         this.catgories = response.data;
       },
     });
 
     this._WhishlistService.getWhishList().subscribe({
-      next: (response) => {
+      next: (response: any) => {
         // console.log('wishlist', response.data); // data --->[{id:} ,{id:}]  ===> ["id","id"];
         // [ item._id , item._id ,item._id ]
         const newData = response.data.map((item: any) => item._id);
@@ -73,7 +73,7 @@ export class HomeComponent implements OnInit {
     this._Renderer2.setAttribute(element, 'disabled', 'true');
 
     this._CartService.addToCart(id).subscribe({
-      next: (response) => {
+      next: (response: any) => {
         console.log(response);
         console.log(response.message);
         this._ToastrService.success(response.message);
@@ -89,7 +89,7 @@ export class HomeComponent implements OnInit {
 
   addFav(prodId: string | undefined): void {
     this._WhishlistService.addToWhishList(prodId).subscribe({
-      next: (response) => {
+      next: (response: any) => {
         console.log(response);
         this._ToastrService.success(response.message);
         this.wishListData = response.data; // ["id","id","id"] --> wishlist
@@ -99,7 +99,7 @@ export class HomeComponent implements OnInit {
 
   removeFav(prodId: string | undefined): void {
     this._WhishlistService.removeWhishList(prodId).subscribe({
-      next: (response) => {
+      next: (response: any) => {
         console.log(response);
         this._ToastrService.success(response.message);
         this.wishListData = response.data; // ["id","id","id"] --> wishlist
