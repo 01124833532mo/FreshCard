@@ -31,6 +31,14 @@ const routes: Routes = [
         title: 'Cart',
       },
       {
+        path: 'whishlist',
+        loadComponent: () =>
+          import('./components/whishlist/whishlist.component').then(
+            (m) => m.WhishlistComponent
+          ),
+        title: 'Wishlist',
+      },
+      {
         path: 'products',
         loadComponent: () =>
           import('./components/products/products.component').then(

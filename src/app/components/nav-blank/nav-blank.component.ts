@@ -5,6 +5,8 @@ import {
   OnInit,
   Renderer2,
   ViewChild,
+  signal,
+  computed,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
@@ -38,18 +40,12 @@ export class NavBlankComponent implements OnInit {
     }
   }
 
-  cartNum: number = 0;
+  cartNum = computed(() => this._CartService.cartNumber());
 
   ngOnInit(): void {
-    this._CartService.cartNumber.subscribe({
-      next: (data) => {
-        this.cartNum = data;
-      },
-    });
-
     this._CartService.getCartUser().subscribe({
       next: (response) => {
-        this.cartNum = response.numOfCartItems;
+        this._CartService.cartNumber.set(response.numOfCartItems);
       },
     });
   }

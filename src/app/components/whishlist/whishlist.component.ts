@@ -45,7 +45,12 @@ export class WhishlistComponent implements OnInit {
         this._ToastrService.success(response.message);
         this._Renderer2.removeAttribute(element, 'disabled');
 
-        this._CartService.cartNumber.next(response.numOfCartItems);
+        const updatedCount = response?.numOfCartItems;
+        if (typeof updatedCount === 'number') {
+          this._CartService.cartNumber.set(updatedCount);
+        } else {
+          this._CartService.refreshCartCount();
+        }
       },
       error: (err) => {
         this._Renderer2.removeAttribute(element, 'disabled');

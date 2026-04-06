@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnInit, Renderer2, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CartService } from 'src/app/core/services/cart.service';
 import { RouterLink } from '@angular/router';
@@ -15,13 +15,13 @@ export class CartComponent implements OnInit {
     private _CartService: CartService,
     private _Renderer2: Renderer2
   ) {}
-  cartDetails: any = null;
+  cartDetails = signal<any>(null);
 
   ngOnInit(): void {
     this._CartService.getCartUser().subscribe({
       next: (response) => {
         console.log('getcart', response);
-        this.cartDetails = response.data;
+        this.cartDetails.set(response.data);
       },
     });
   }
@@ -32,10 +32,10 @@ export class CartComponent implements OnInit {
     this._CartService.removeCartItem(id).subscribe({
       next: (response) => {
         console.log('remove', response);
-        this.cartDetails = response.data;
+        this.cartDetails.set(response.data);
         this._Renderer2.removeAttribute(element, 'disabled');
 
-        this._CartService.cartNumber.next(response.numOfCartItems);
+        this._CartService.cartNumber.set(response.numOfCartItems);
       },
       error: (err) => {
         this._Renderer2.removeAttribute(element, 'disabled');
@@ -56,7 +56,7 @@ export class CartComponent implements OnInit {
 
       this._CartService.updateCartCount(id, count).subscribe({
         next: (response) => {
-          this.cartDetails = response.data;
+          this.cartDetails.set(response.data);
           this._Renderer2.removeAttribute(el1, 'disabled');
           this._Renderer2.removeAttribute(el2, 'disabled');
         },
@@ -72,8 +72,8 @@ export class CartComponent implements OnInit {
     this._CartService.clearCart().subscribe({
       next: (response) => {
         if (response.message === 'success') {
-          this.cartDetails = null;
-          this._CartService.cartNumber.next(0);
+          this.cartDetails.set(null);
+          this._CartService.cartNumber.set(0);
         }
       },
     });

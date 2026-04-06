@@ -51,7 +51,7 @@ export class ProductsComponent implements OnInit {
         this._ToastrService.success(response.message);
         this._Renderer2.removeAttribute(element, 'disabled');
 
-        this._CartService.cartNumber.next(response.numOfCartItems);
+        this._CartService.cartNumber.set(response.numOfCartItems);
       },
       error: (err) => {
         this._Renderer2.removeAttribute(element, 'disabled');
