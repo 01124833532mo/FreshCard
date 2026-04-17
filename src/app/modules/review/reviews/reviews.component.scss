@@ -1,0 +1,157 @@
+.reviews-section {
+  padding: 0 16px;
+}
+
+.reviews-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #2c3e50;
+}
+
+// ─── Form Card ───────────────────────────────────────────────
+.review-form-card {
+  background: #f9fafb;
+  border: 1px solid #e8edf2;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+
+  h5 {
+    font-weight: 600;
+    color: #2c3e50;
+  }
+}
+
+.review-textarea {
+  border-radius: 10px;
+  border: 1.5px solid #dce5e5;
+  resize: none;
+  transition: border-color 0.2s;
+
+  &:focus {
+    border-color: var(--main-color, #0aad0a);
+    box-shadow: 0 0 0 3px rgba(10, 173, 10, 0.1);
+  }
+}
+
+// ─── Star Picker ────────────────────────────────────────────
+.star-picker {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  i {
+    font-size: 1.5rem;
+    color: #d1d5db;
+    cursor: pointer;
+    transition: color 0.15s, transform 0.15s;
+
+    &.fa-star,
+    &.active {
+      color: #f59e0b;
+    }
+
+    &:hover {
+      transform: scale(1.2);
+    }
+  }
+}
+
+.rating-label {
+  font-size: 0.85rem;
+  color: #6b7280;
+  font-weight: 600;
+}
+
+// ─── Reviews List ────────────────────────────────────────────
+.reviews-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.review-card {
+  background: #ffffff;
+  border: 1px solid #e8edf2;
+  border-radius: 14px;
+  padding: 18px 20px;
+  transition: box-shadow 0.2s ease;
+
+  &:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  }
+
+  &.highlight {
+    border-color: var(--main-color, #0aad0a);
+    background: #f0fff0;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+}
+
+.reviewer-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0aad0a, #06850a);
+  color: white;
+  font-weight: 700;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.reviewer-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #1f2937;
+}
+
+.review-stars {
+  i {
+    color: #d1d5db;
+    font-size: 0.9rem;
+
+    &.fa-star {
+      color: #f59e0b;
+    }
+  }
+}
+
+.review-text {
+  color: #4b5563;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+
+.review-actions {
+  display: flex;
+  gap: 8px;
+
+  .btn {
+    border-radius: 8px;
+    font-size: 0.8rem;
+    padding: 4px 12px;
+  }
+}
+
+// ─── Empty State ─────────────────────────────────────────────
+.empty-reviews {
+  background: #f9fafb;
+  border-radius: 16px;
+  padding: 32px;
+  border: 1px dashed #d1d5db;
+
+  i {
+    opacity: 0.4;
+  }
+}

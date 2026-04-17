@@ -1,0 +1,106 @@
+<section class="container py-5">
+  <!-- Header -->
+  <div class="d-flex align-items-center justify-content-between mb-4">
+    <div>
+      <h2 class="mb-0 text-main fw-bold">
+        <i class="fas fa-box-open me-2"></i> My Orders
+      </h2>
+      <p class="text-muted mb-0 small" *ngIf="!isLoading && orders.length > 0">
+        {{ orders.length }} order{{ orders.length > 1 ? 's' : '' }} found
+      </p>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="isLoading" class="d-flex justify-content-center py-5">
+    <div class="spinner-border text-main" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="!isLoading && errorMessage" class="alert alert-danger rounded-3">
+    <i class="fas fa-exclamation-circle me-2"></i>{{ errorMessage }}
+  </div>
+
+  <!-- Empty -->
+  <div
+    *ngIf="!isLoading && !errorMessage && orders.length === 0"
+    class="empty-state text-center py-5"
+  >
+    <i class="fas fa-shopping-bag fa-4x mb-3 text-muted"></i>
+    <h4 class="text-muted">No orders yet</h4>
+    <p class="text-muted">Start shopping to see your orders here.</p>
+  </div>
+
+  <!-- Orders List -->
+  <div class="row g-4" *ngIf="!isLoading && orders.length > 0">
+    <div class="col-12" *ngFor="let order of orders; let i = index">
+      <div class="order-card p-3 p-md-4">
+
+        <!-- Order Header -->
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-3 gap-2">
+          <div>
+            <h5 class="mb-1 fw-bold">
+              <i class="fas fa-hashtag text-main me-1"></i>Order #{{ order.id }}
+            </h5>
+            <small class="text-muted">
+              <i class="far fa-calendar-alt me-1"></i>{{ order.createdAt | date : 'EEEE, d MMMM y' }}
+            </small>
+          </div>
+          <div class="text-md-end">
+            <div class="fs-5 fw-bold text-main">{{ order.totalOrderPrice | currency : 'EGP ' : 'symbol' : '1.0-0' }}</div>
+            <small class="text-muted text-capitalize">
+              <i class="fas fa-credit-card me-1"></i>{{ order.paymentMethodType }}
+            </small>
+          </div>
+        </div>
+
+        <!-- Badges -->
+        <div class="d-flex flex-wrap gap-2 mb-3">
+          <span class="badge rounded-pill px-3 py-2" [ngClass]="order.isPaid ? 'bg-success' : 'bg-secondary'">
+            <i class="fas me-1" [ngClass]="order.isPaid ? 'fa-check-circle' : 'fa-clock'"></i>
+            {{ order.isPaid ? 'Paid' : 'Pending Payment' }}
+          </span>
+          <span class="badge rounded-pill px-3 py-2" [ngClass]="order.isDelivered ? 'bg-primary' : 'bg-warning text-dark'">
+            <i class="fas me-1" [ngClass]="order.isDelivered ? 'fa-truck' : 'fa-hourglass-half'"></i>
+            {{ order.isDelivered ? 'Delivered' : 'Processing' }}
+          </span>
+          <span class="badge rounded-pill px-3 py-2 bg-light text-dark border">
+            <i class="fas fa-box me-1"></i>{{ orderItemsCount(order) }} item{{ orderItemsCount(order) > 1 ? 's' : '' }}
+          </span>
+        </div>
+
+        <!-- Products -->
+        <div class="products-grid" *ngIf="order.cartItems.length > 0">
+          <div
+            class="product-item"
+            *ngFor="let item of visibleCartItems(order)"
+            [title]="item.product?.title"
+          >
+            <img
+              [src]="item.product?.imageCover"
+              [alt]="item.product?.title"
+              class="product-thumb"
+            />
+            <div class="product-qty">x{{ item.count }}</div>
+          </div>
+          <div class="product-item more-items" *ngIf="order.cartItems.length > 5">
+            +{{ order.cartItems.length - 5 }}
+          </div>
+        </div>
+
+        <!-- Shipping Address -->
+        <div class="shipping-info mt-3" *ngIf="order.shippingAddress">
+          <small class="text-muted">
+            <i class="fas fa-map-marker-alt me-1 text-main"></i>
+            {{ order.shippingAddress.details }}
+            <span *ngIf="order.shippingAddress.city"> — {{ order.shippingAddress.city }}</span>
+            <span *ngIf="order.shippingAddress.phone"> &bull; {{ order.shippingAddress.phone }}</span>
+          </small>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>

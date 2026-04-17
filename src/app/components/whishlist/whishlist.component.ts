@@ -31,6 +31,8 @@ export class WhishlistComponent implements OnInit {
         this.products = response.data;
         const newData = response.data.map((item: any) => item._id);
         this.wishListData = newData;
+        // تحديث العداد عند فتح صفحة المفضلة
+        this._WhishlistService.wishlistCount.set(newData.length);
       },
     });
   }
@@ -64,6 +66,7 @@ export class WhishlistComponent implements OnInit {
         console.log(response);
         this._ToastrService.success(response.message);
         this.wishListData = response.data; // ["id","id","id"] --> wishlist
+        this._WhishlistService.wishlistCount.set(response.data.length);
       },
     });
   }
@@ -75,13 +78,28 @@ export class WhishlistComponent implements OnInit {
         this._ToastrService.success(response.message);
         this.wishListData = response.data; // ["id","id","id"] --> wishlist
 
-        // products  --> [{} , {} , {}]
+        // تحديث العداد في الـ nav فوراً
+        this._WhishlistService.wishlistCount.set(response.data.length);
 
+        // products  --> [{} , {} , {}]
         const newProductsData = this.products.filter((item: any) =>
           this.wishListData.includes(item._id)
         );
 
         this.products = newProductsData;
+      },
+    });
+  }
+
+  clearAll(): void {
+    this._WhishlistService.clearWishlist().subscribe({
+      next: (response) => {
+        console.log(response);
+        this._ToastrService.success('Wishlist cleared successfully');
+        this.products = [];
+        this.wishListData = [];
+        // إرجاع العداد لصفر
+        this._WhishlistService.wishlistCount.set(0);
       },
     });
   }

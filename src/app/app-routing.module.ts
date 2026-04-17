@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { authGuard } from './core/guard/auth.guard';
 
 const routes: Routes = [
-  //blank
   {
     path: '',
     canActivate: [authGuard],
@@ -15,7 +14,6 @@ const routes: Routes = [
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       {
         path: 'home',
-
         loadComponent: () =>
           import('./components/home/home.component').then(
             (m) => m.HomeComponent
@@ -48,7 +46,6 @@ const routes: Routes = [
       },
       {
         path: 'productdetails/:id',
-
         loadComponent: () =>
           import('./components/details/details.component').then(
             (m) => m.DetailsComponent
@@ -64,13 +61,20 @@ const routes: Routes = [
         title: 'Brands',
       },
       {
-        path: 'allorders',
-
+        path: 'orders',
         loadComponent: () =>
-          import('./components/allorders/allorders.component').then(
-            (m) => m.AllordersComponent
+          import('./modules/order/pages/order-list/order-list.component').then(
+            (m) => m.OrderListComponent
           ),
-        title: 'AllOrders',
+        title: 'My Orders',
+      },
+      {
+        path: 'profile',
+        loadComponent: () =>
+          import('./components/profile/profile.component').then(
+            (m) => m.ProfileComponent
+          ),
+        title: 'Profile',
       },
       {
         path: 'forgotpassword',
@@ -106,8 +110,6 @@ const routes: Routes = [
       },
     ],
   },
-
-  //auth
   {
     path: '',
     loadComponent: () =>
@@ -126,7 +128,6 @@ const routes: Routes = [
       },
       {
         path: 'register',
-
         loadComponent: () =>
           import('./components/register/register.component').then(
             (m) => m.RegisterComponent
@@ -135,7 +136,6 @@ const routes: Routes = [
       },
       {
         path: 'forgot',
-
         loadComponent: () =>
           import('./components/forgotpassword/forgotpassword.component').then(
             (m) => m.ForgotpasswordComponent
@@ -144,8 +144,6 @@ const routes: Routes = [
       },
     ],
   },
-
-  //notfound
   {
     path: '**',
     loadComponent: () =>

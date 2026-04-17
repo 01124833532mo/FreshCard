@@ -25,11 +25,28 @@ export class AuthService {
     const encode = localStorage.getItem('etoken');
 
     if (encode !== null) {
-      //tmamm
-
       const decode = jwtDecode(encode);
 
       this.userInfo = decode;
+      return;
     }
+
+    this.userInfo = null;
+  }
+
+  getCurrentUserId(): string | null {
+    if (!this.userInfo) {
+      this.decodeUser();
+    }
+
+    return this.userInfo?.id || this.userInfo?._id || this.userInfo?.userId || null;
+  }
+
+  getCurrentUserData(): any {
+    if (!this.userInfo) {
+      this.decodeUser();
+    }
+
+    return this.userInfo;
   }
 }

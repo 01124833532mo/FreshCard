@@ -1,4 +1,10 @@
 <section class="py-4" *ngIf="products.length > 0">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="mb-0">My Wishlist <span class="badge bg-info">{{ products.length }}</span></h2>
+    <button class="btn btn-outline-danger btn-sm" (click)="clearAll()">
+      <i class="fas fa-trash-alt me-1"></i> Clear All
+    </button>
+  </div>
   <div class="row g-4">
     <div
       *ngFor="let product of products"

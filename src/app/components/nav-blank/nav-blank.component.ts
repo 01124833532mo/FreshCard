@@ -11,6 +11,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { CartService } from 'src/app/core/services/cart.service';
+import { WhishlistService } from 'src/app/core/services/whishlist.service';
 
 @Component({
   selector: 'app-nav-blank',
@@ -23,7 +24,8 @@ export class NavBlankComponent implements OnInit {
   constructor(
     private _Router: Router,
     private _CartService: CartService,
-    private _Renderer2: Renderer2
+    private _Renderer2: Renderer2,
+    private _WhishlistService: WhishlistService
   ) {}
 
   @ViewChild('navBar') navElement!: ElementRef; // element
@@ -41,11 +43,18 @@ export class NavBlankComponent implements OnInit {
   }
 
   cartNum = computed(() => this._CartService.cartNumber());
+  wishlistNum = computed(() => this._WhishlistService.wishlistCount());
 
   ngOnInit(): void {
     this._CartService.getCartUser().subscribe({
       next: (response) => {
         this._CartService.cartNumber.set(response.numOfCartItems);
+      },
+    });
+
+    this._WhishlistService.getWhishList().subscribe({
+      next: (response) => {
+        this._WhishlistService.wishlistCount.set(response.data?.length ?? 0);
       },
     });
   }

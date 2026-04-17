@@ -33,7 +33,19 @@
         >
           +Add To Cart
         </button>
+
+        <a
+          href="#reviews"
+          class="btn btn-outline-secondary w-100 py-2 mt-2"
+        >
+          View Reviews
+        </a>
       </div>
     </div>
   </div>
 </section>
+
+<!-- Reviews Section -->
+<div class="w-75 mx-auto mb-5" *ngIf="productDetails">
+  <app-reviews [productId]="productDetails._id"></app-reviews>
+</div>

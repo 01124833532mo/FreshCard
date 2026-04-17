@@ -6,11 +6,12 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { CartService } from 'src/app/core/services/cart.service';
 import { ToastrService } from 'ngx-toastr';
+import { ReviewsComponent } from 'src/app/modules/review/reviews/reviews.component';
 
 @Component({
   selector: 'app-details',
   standalone: true,
-  imports: [CommonModule, CarouselModule],
+  imports: [CommonModule, CarouselModule, ReviewsComponent],
   templateUrl: './details.component.html',
   styleUrls: ['./details.component.scss'],
 })
@@ -32,13 +33,18 @@ export class DetailsComponent implements OnInit {
       next: (params) => {
         this.productId = params.get('id');
         console.log(this.productId);
-      },
-    });
 
-    this._ProductService.getProductDetails(this.productId).subscribe({
-      next: ({ data }) => {
-        console.log(data);
-        this.productDetails = data;
+        if (!this.productId) {
+          this.productDetails = null;
+          return;
+        }
+
+        this._ProductService.getProductDetails(this.productId).subscribe({
+          next: ({ data }) => {
+            console.log(data);
+            this.productDetails = data;
+          },
+        });
       },
     });
   }

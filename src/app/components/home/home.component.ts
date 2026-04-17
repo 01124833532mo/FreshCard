@@ -93,6 +93,7 @@ export class HomeComponent implements OnInit {
         console.log(response);
         this._ToastrService.success(response.message);
         this.wishListData = response.data; // ["id","id","id"] --> wishlist
+        this._WhishlistService.wishlistCount.set(response.data.length);
       },
     });
   }
@@ -103,6 +104,7 @@ export class HomeComponent implements OnInit {
         console.log(response);
         this._ToastrService.success(response.message);
         this.wishListData = response.data; // ["id","id","id"] --> wishlist
+        this._WhishlistService.wishlistCount.set(response.data.length);
       },
     });
   }
